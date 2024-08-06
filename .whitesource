@@ -18,6 +18,7 @@
     "displayMode": "diff",
     "useMendCheckNames": true
   },
+
   "checkRunSettingsSAST": {
     "checkRunConclusionLevel": "failure",
     "severityThreshold": "high"
