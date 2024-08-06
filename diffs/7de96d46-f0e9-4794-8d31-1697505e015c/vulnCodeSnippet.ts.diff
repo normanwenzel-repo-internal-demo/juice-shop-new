@@ -94,15 +94,15 @@
    const selectedLines: number[] = req.body.selectedLines
    const verdict = getVerdict(vulnLines, neutralLines, selectedLines)
    let hint
-   if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
-@@ -94,1 +95,6 @@
--    const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
-+      const resolvedPath = path.resolve('./data/static/codefixes/', key + '.info.yml');
-+      const expectedDir = path.resolve('./data/static/codefixes/');
-+      if (!resolvedPath.startsWith(expectedDir)) {
+@@ -93,1 +94,6 @@
+-  if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
++    const resolvedPath = path.resolve('./data/static/codefixes/', key + '.info.yml');
++    const expectedDir = path.resolve('./data/static/codefixes/');
++    if (!resolvedPath.startsWith(expectedDir)) {
 +        throw new Error('Invalid path');
-+      }
-+      const codingChallengeInfos = yaml.load(fs.readFileSync(resolvedPath, 'utf8'));
++    }
++    if (fs.existsSync(resolvedPath)) {
+     const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
      if (codingChallengeInfos?.hints) {
        if (accuracy.getFindItAttempts(key) > codingChallengeInfos.hints.length) {
          if (vulnLines.length === 1) {
