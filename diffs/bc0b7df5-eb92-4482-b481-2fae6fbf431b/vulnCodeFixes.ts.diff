@@ -80,15 +80,15 @@
      })
    } else {
      let explanation
-     if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
-@@ -80,1 +81,6 @@
--      const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
-+        const resolvedPath = path.resolve('./data/static/codefixes/', key + '.info.yml');
-+        const expectedDir = path.resolve('./data/static/codefixes/');
-+        if (!resolvedPath.startsWith(expectedDir)) {
-+          throw new Error('Invalid path');
-+        }
-+        const codingChallengeInfos = yaml.load(fs.readFileSync(resolvedPath, 'utf8'));
+@@ -79,1 +80,6 @@
+-    if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
++      const resolvedPath = path.resolve('./data/static/codefixes/' + key + '.info.yml');
++      const expectedDir = path.resolve('./data/static/codefixes');
++      if (!resolvedPath.startsWith(expectedDir)) {
++        throw new Error('Invalid path');
++      }
++      if (fs.existsSync(resolvedPath)) {
+       const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
        const selectedFixInfo = codingChallengeInfos?.fixes.find(({ id }: { id: number }) => id === selectedFix + 1)
        if (selectedFixInfo?.explanation) explanation = res.__(selectedFixInfo.explanation)
      }
