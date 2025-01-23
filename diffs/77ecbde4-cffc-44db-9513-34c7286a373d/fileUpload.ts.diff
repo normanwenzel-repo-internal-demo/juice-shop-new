@@ -27,13 +27,14 @@
      if (((file?.buffer) != null) && utils.isChallengeEnabled(challenges.fileWriteChallenge)) {
        const buffer = file.buffer
        const filename = file.originalname.toLowerCase()
-+        const resolvedPath = path.resolve(tempFile);
-+        const expectedDir = path.resolve(os.tmpdir());
-+        if (!resolvedPath.startsWith(expectedDir)) {
-+            return next(new Error('Invalid path'));
-+        }
-       const tempFile = path.join(os.tmpdir(), filename)
-       fs.open(tempFile, 'w', function (err, fd) {
+-      const tempFile = path.join(os.tmpdir(), filename)
+-      fs.open(tempFile, 'w', function (err, fd) {
++      const resolvedPath = path.resolve(tempFile);
++      const expectedDir = path.resolve(os.tmpdir());
++      if (!resolvedPath.startsWith(expectedDir)) {
++          return next(new Error('Invalid path'));
++      }
++      fs.open(resolvedPath, 'w', function (err, fd) {
          if (err != null) { next(err) }
          fs.write(fd, buffer, 0, buffer.length, null, function (err) {
            if (err != null) { next(err) }
